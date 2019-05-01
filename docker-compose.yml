@@ -3,10 +3,7 @@ version: '3'
 services:
   # PHP Service
   app:
-    build:
-      context: .
-      dockerfile: laravel-app/Dockerfile
-    image: laravel-php
+    image: chaitanyamaili/laravel-app
     container_name: laravel-app
     restart: unless-stopped
     tty: true
@@ -15,8 +12,8 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
-      - ./laravel-app/:/var/www
-      - ./laravel-app/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - .:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
 
@@ -30,7 +27,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./laravel-app/:/var/www
+      - .:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
